@@ -1,0 +1,36 @@
+---
+# tasks file for instance
+- name: provisioning webserver in aws
+  ec2:
+    key_name: "ansiblekey"
+    instance_type: "{{instance_type}}"
+    image: "{{image}}"
+    wait: yes
+    count: 4
+    vpc_subnet_id: "subnet-dccaf0b4"
+    assign_public_ip: yes
+    region: "{{region}}"
+    state: present
+    group_id: "sg-025abffaac443dd6a"
+    aws_access_key: "{{myaccess}}"
+    aws_secret_key: "{{mysecret}}"
+    instance_tags:
+     Name: ansibleweb
+
+- name: provisioning load balancer in aws
+  ec2:     
+    key_name: "ansiblekey"
+    instance_type: "{{instance_type}}"
+    image: "{{image}}"
+    wait: yes
+    count: 1
+    vpc_subnet_id: "subnet-dccaf0b4"
+    assign_public_ip: yes
+    region: "{{region}}"
+    state: present
+    group_id: "sg-025abffaac443dd6a"
+    aws_access_key: "{{myaccess}}"
+    aws_secret_key: "{{mysecret}}"
+    instance_tags:
+     Name: load-balancer
+
